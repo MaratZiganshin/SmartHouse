@@ -28,6 +28,8 @@ public class DataGetter {
 
     @Deprecated
     public static void fakeGetToken(String login, String password) throws IOException{
-        SessionData.setMainToken(new Token("asfhasfhahf", null));
+        if (login.equals("marat@marat") && password.equals("aaaaaaaa"))
+            SessionData.setMainToken(new Token("asfhasfhahf", null));
+        else throw new IOException();
     }
 }
