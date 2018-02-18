@@ -1,4 +1,4 @@
-package JSON;
+package Model;
 
 
 public class Token {

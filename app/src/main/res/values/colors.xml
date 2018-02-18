@@ -4,6 +4,6 @@
     <color name="colorPrimary">#000000</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#00238a</color>
-    <color name="startButtonGradient">#FF00FF</color>
-    <color name="endButtonGrandient">#8A2BE2</color>
+    <color name="startButtonGradient">#ee00ff</color>
+    <color name="endButtonGrandient">#5900ff</color>
 </resources>

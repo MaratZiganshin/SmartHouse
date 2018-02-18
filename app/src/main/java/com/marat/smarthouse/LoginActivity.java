@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
-    private View mLoginFormView;
+    //private View mLoginFormView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +103,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        mLoginFormView = findViewById(R.id.login_form);
+        //mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
     }
 
@@ -209,7 +209,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private boolean isEmailValid(String email) {
-        return email.contains("@");
+        return email.length()>=6;
     }
 
     private boolean isPasswordValid(String password) {
@@ -224,7 +224,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
@@ -249,7 +249,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // and hide the relevant UI components.
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
+        }*/
     }
 
     @Override
@@ -325,29 +325,27 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // TODO: attempt authentication against a network service.
 
             try{
-                DataGetter.fakeGetToken(mEmail, mPassword);
-                Intent intent = new Intent(LoginActivity.this, Rooms.class);
-                startActivity(intent);
-                return true;
+                DataGetter.getToken(mEmail, mPassword);
+                if (DataGetter.hasHome()) {
+                    Intent intent = new Intent(LoginActivity.this, Rooms.class);
+                    startActivity(intent);
+                    return true;
+                }
+                else
+                {
+                    Intent intent = new Intent(LoginActivity.this, NoHome.class);
+                    startActivity(intent);
+                    return true;
+                }
+            }
+            catch (IllegalArgumentException e){
+                mPasswordView.setError("Неверный пароль");
+                mPasswordView.requestFocus();
+                return false;
             }
             catch (IOException e){
                 return false;
             }
-            /*try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }*/
-
         }
 
         @Override
@@ -358,8 +356,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             if (success) {
                 finish();
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+                /*mPasswordView.setError(getString(R.string.error_incorrect_password));
+                mPasswordView.requestFocus();*/
             }
         }
 
