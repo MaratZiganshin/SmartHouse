@@ -2,10 +2,14 @@ package Model;
 
 public class Device {
     private long id;
+    private String type;
 
-    public Device(long id, String name) {
+    private String state;
+    public Device(long id, String name, String type, String state) {
         this.id = id;
         this.name = name;
+        this.type = type;
+        this.state = state;
     }
 
     public long getId() {
@@ -25,4 +29,20 @@ public class Device {
     }
 
     private String name;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
 }

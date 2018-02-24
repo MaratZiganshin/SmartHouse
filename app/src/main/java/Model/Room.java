@@ -3,7 +3,8 @@ package Model;
 import java.util.List;
 
 public class Room {
-    private String Name;
+    private String name;
+    private String type;
 
     public long getId() {
         return id;
@@ -16,11 +17,11 @@ public class Room {
     private long id;
     private Device[] devices;
     public String getName() {
-        return Name;
+        return name;
     }
 
-    public Room(String name, long id, Device[] devices) {
-        Name = name;
+    public Room(String name, String type, long id, Device[] devices) {
+        this.name = name;
         this.id = id;
         this.devices = devices;
     }
@@ -31,5 +32,13 @@ public class Room {
 
     public void setDevices(Device[] devices) {
         this.devices = devices;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

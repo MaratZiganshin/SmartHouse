@@ -26,9 +26,9 @@ public class SessionData {
         SessionData.sessionToken = sessionToken;
     }
 
+    public static String error;
 
-
-    private static Token sessionToken;
+    private static Token sessionToken = null;
 
     public static Token getMainToken() {
         return mainToken;
@@ -49,6 +49,9 @@ public class SessionData {
     public static List<Device> getDevices() {
         return devices;
     }
+
+    public static Device currentDevice;
+    public static Room currentRoom;
 
     public static void setDevices(List<Device> devices) {
         SessionData.devices = devices;

@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Controller.DataGetter;
+import Model.SessionData;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -166,8 +167,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        final String email = mEmailView.getText().toString();
+        final String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -203,8 +204,43 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+            Thread thread = new Thread(){
+                @Override
+                public void run(){
+                    try{
+                        SessionData.error = "";
+                        DataGetter.getToken(email, password);
+                        if (DataGetter.hasHome()) {
+                            Intent intent = new Intent(LoginActivity.this, Rooms.class);
+                            startActivity(intent);
+                        }
+                        else
+                        {
+                            Intent intent = new Intent(LoginActivity.this, NoHome.class);
+                            startActivity(intent);
+                        }
+                    }
+                    catch (IllegalArgumentException e){
+                        SessionData.error = "WrongPassword";
+
+                    }
+                    catch (IOException e){
+                        SessionData.error = "NoConnection";
+                    }
+                }
+            };
+            thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+
+            }
+            if (SessionData.error.equals("WrongPassword")){
+                mPasswordView.setError("Неверный пароль");
+                mPasswordView.requestFocus();
+            }
+            /*mAuthTask = new UserLoginTask(email, password);
+            mAuthTask.execute((Void) null);*/
         }
     }
 

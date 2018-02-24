@@ -27,4 +27,13 @@
     <string name="action_settings">Settings</string>
     <string name="add_home">Добавить дом</string>
     <string name="info_no_home">Упс!\nЛокация не найдена</string>
+    <string name="title_activity_test">Test</string>
+
+    <string-array name="rooms">
+        <item>Cпальня</item>
+        <item>Гараж</item>
+        <item>Ванная</item>
+        <item>Туалет</item>
+        <item>Кухня</item>
+    </string-array>
 </resources>

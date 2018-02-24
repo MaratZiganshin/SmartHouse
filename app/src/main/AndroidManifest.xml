@@ -16,7 +16,13 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
-            android:label="@string/welcome"></activity>
+            android:label="@string/welcome">
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".RegisterActivity"
             android:label="@string/action_register"
@@ -24,15 +30,27 @@
         <activity android:name=".NoHome" />
         <activity
             android:name=".Rooms"
-            android:label="@string/app_name">
-            <intent-filter android:label="@string/app_name">
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".Devices"
-            android:label="Устройства"></activity>
+            android:label="@string/app_name" />
+        <activity
+            android:name=".Devices"
+            android:label="Устройства" />
+        <activity
+            android:name=".Lamp"
+            android:label="Лампа" />
+        <activity
+            android:name=".RoomAdd"
+            android:label="Новая комната" />
+        <activity
+            android:name=".RoomChange"
+            android:label="Изменить комнату" />
+        <activity
+            android:name=".DeviceAdd"
+            android:label="Добавить устройство" />
+        <activity
+            android:name=".DeviceChange"
+            android:label="Изменить устройство" />
+        <activity android:name=".Temperature"
+            android:label="Температура"></activity>
     </application>
 
 </manifest>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.marat.smarthouse.RoomAdd">
+    <TextView
+        android:id = "@+id/about_room"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textColor="#000000"
+        android:textSize="20dp"
+        android:text = "Выберите тип комнаты"/>
+    <Spinner android:layout_width="match_parent" android:layout_below="@id/about_room"
+        android:entries="@array/rooms"
+        android:id = "@+id/choose_room"
+        android:layout_height="wrap_content"
+        android:background="@drawable/room_button"
+        android:layout_margin="20dp"
+        android:minHeight="40dp">
+
+    </Spinner>
+    <TextView
+        android:textColor="#000000"
+        android:textSize="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/about_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Введите название комнаты"
+        android:layout_below="@id/choose_room"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id = "@+id/login_text_input_reg"
+        android:layout_below="@id/about_login">
+
+        <AutoCompleteTextView
+            android:id="@+id/room_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Название"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+    </android.support.design.widget.TextInputLayout>
+    <Button
+        android:id="@+id/add_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bigButtonSize"
+        android:layout_gravity="bottom"
+        android:background="@drawable/big_button"
+        android:text="Добавить"
+        android:layout_margin="20dp"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>
