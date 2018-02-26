@@ -16,9 +16,9 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="about_email">Мы пошлем письмо на наш email для верификации аккаунта</string>
-    <string name="about_password">Ваш пароль должен содержать минимум 8 символов</string>
-    <string name="about_login">Ваш логин должен содержать минимум 6 символов</string>
+    <string name="about_email">Email для верификации аккаунта</string>
+    <string name="about_password">Минимум 8 символов</string>
+    <string name="about_login">Минимум 6 символов</string>
     <string name="title_activity_rooms">Rooms</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>

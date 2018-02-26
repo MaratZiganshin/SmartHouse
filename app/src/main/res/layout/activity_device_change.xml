@@ -5,5 +5,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.marat.smarthouse.DeviceChange">
+    <TextView
+        android:textColor="#000000"
+        android:textSize="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/about_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Введите название устройства"/>
 
+    <android.support.design.widget.TextInputLayout
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id = "@+id/login_text_input_reg"
+        android:layout_below="@id/about_login">
+
+        <AutoCompleteTextView
+            android:id="@+id/device_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Название"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+    </android.support.design.widget.TextInputLayout>
+    <Button
+        android:id="@+id/rename_device_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bigButtonSize"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/big_button"
+        android:text="Переименновать"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 </RelativeLayout>

@@ -1,3 +1,7 @@
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id ="@+id/main_layout"
@@ -86,7 +90,44 @@
                     android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
+    <TextView
+        android:id="@+id/about_flat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Id и пароль от дома"
+        android:layout_below="@id/password_text_input_reg"/>
 
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id = "@+id/home_id"
+        android:layout_below="@id/about_flat">
+
+        <AutoCompleteTextView
+            android:id="@+id/home_id_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Id"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id = "@+id/home_pass"
+        android:layout_below="@id/home_id">
+
+        <AutoCompleteTextView
+            android:id="@+id/home_pass_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Пароль от дома"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+    </android.support.design.widget.TextInputLayout>
             <Button
                 android:id="@+id/register_button"
                 android:layout_width="match_parent"
@@ -95,7 +136,9 @@
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:textSize="18sp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/big_button"
-                android:layout_below="@id/password_text_input_reg"/>
+                android:layout_below="@id/home_pass"/>
 
 </RelativeLayout>
+</ScrollView>

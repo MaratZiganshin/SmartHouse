@@ -33,6 +33,56 @@ import Model.Room;
 import Model.SessionData;
 
 public class Rooms extends AppCompatActivity {
+
+    private View.OnClickListener roomClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Room r = null;
+            for (Room temp : SessionData.getRooms())
+                if (temp.getId() == Long.parseLong(view.getContentDescription().toString()))
+                {
+                    r = temp;
+                    break;
+                }
+
+            try {
+                ArrayList<Device> list = (ArrayList<Device>)DataGetter.getDevices(r.getId());
+                SessionData.setDevices(list);
+                Intent intent = new Intent(Rooms.this, Devices.class);
+                startActivity(intent);
+            }
+            catch (Exception e){}
+        }
+    };
+
+    private View.OnLongClickListener roomLongClickListener = new View.OnLongClickListener(){
+        @Override
+        public boolean onLongClick(View view) {
+            Room r = null;
+            for (Room temp : SessionData.getRooms())
+                if (temp.getId() == Long.parseLong(view.getContentDescription().toString()))
+                {
+                    r = temp;
+                    break;
+                }
+            SessionData.setCurrentRoom(r);
+            Intent intent = new Intent(Rooms.this, RoomChange.class);
+            startActivity(intent);
+            return true;
+        }
+    };
+
+    private View.OnClickListener settingsClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            try{
+                Intent intent = new Intent(Rooms.this, RoomAdd.class);
+                startActivity(intent);
+            }
+            catch (Exception e){}
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,53 +128,28 @@ public class Rooms extends AppCompatActivity {
                 else
                     linearLayout = findViewById(R.id.rooms_grid3);
                 String name = room.getName();
+
                 ImageButton button = new ImageButton(this);
                 button.setBackgroundResource(R.drawable.room_button);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 params.setMargins(30,30,30, 30);
                 button.setLayoutParams(params);
-                button.setImageResource(getDrawableByName(name));
+                button.setImageResource(getDrawableByName(room.getType()));
                 button.setScaleType(ImageButton.ScaleType.FIT_CENTER);
                 button.setPadding(10,10,10,10);
                 button.setAdjustViewBounds(true);
                 button.setContentDescription(((Long)room.getId()).toString());
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Room r = null;
-                        for (Room temp : SessionData.getRooms())
-                            if (temp.getId() == Long.parseLong(view.getContentDescription().toString()))
-                            {
-                                r = temp;
-                                break;
-                            }
-
-                        try {
-                            ArrayList<Device> list = (ArrayList<Device>)DataGetter.getDevices(r.getId());
-                            SessionData.setDevices(list);
-                            Intent intent = new Intent(Rooms.this, Devices.class);
-                            startActivity(intent);
-                        }
-                        catch (Exception e){}
-                    }
-                });
-                button.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View view) {
-                        Room r = null;
-                        for (Room temp : SessionData.getRooms())
-                            if (temp.getId() == Long.parseLong(view.getContentDescription().toString()))
-                            {
-                                r = temp;
-                                break;
-                            }
-                        SessionData.currentRoom =r;
-                        Intent intent = new Intent(Rooms.this, RoomChange.class);
-                        startActivity(intent);
-                        return true;
-                    }
-                });
+                button.setOnClickListener(roomClickListener);
+                button.setOnLongClickListener(roomLongClickListener);
                 linearLayout.addView(button);
+
+                LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                p.setMargins(30, 10, 30, 10);
+                TextView textView = new TextView(this);
+                textView.setText(room.getName());
+                textView.setLayoutParams(p);
+                textView.setMaxLines(1);
+                linearLayout.addView(textView);
             }
             index++;
             if (index % 3 == 1)
@@ -142,36 +167,32 @@ public class Rooms extends AppCompatActivity {
             button.setScaleType(ImageButton.ScaleType.FIT_CENTER);
             button.setPadding(10,10,10,10);
             button.setAdjustViewBounds(true);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    try{
-                        Intent intent = new Intent(Rooms.this, RoomAdd.class);
-                        startActivity(intent);
-                    }
-                    catch (Exception e){}
-                }
-            });
+            button.setOnClickListener(settingsClickListener);
             linearLayout.addView(button);
+            LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            p.setMargins(30, 10, 30, 10);
+            TextView textView = new TextView(this);
+            textView.setText("Настройки");
+            textView.setLayoutParams(p);
+            linearLayout.addView(textView);
         }
         catch (Exception e){}
     }
 
 
     private int getDrawableByName(String name){
-        switch (name){
-            case "Garage":
-                return R.drawable.garage;
-            case "Sleeping":
-                return R.drawable.sleeping;
-            case "Bathroom":
-                return R.drawable.bathroom;
-            case "Toilet":
-                return R.drawable.toilet;
-            case "Kitchen":
-                return R.drawable.kitchen;
-            default:
-                return R.drawable.kitchen;
-        }
+        if (name == null)
+            return R.drawable.garage;
+        if (name.equals("Garage"))
+            return R.drawable.garage;
+        if (name.equals("Sleeping"))
+            return R.drawable.sleeping;
+        if (name.equals("Bathroom"))
+            return R.drawable.bathroom;
+        if (name.equals("Toilet"))
+            return R.drawable.toilet;
+        if (name.equals("Kitchen"))
+            return R.drawable.kitchen;
+        return R.drawable.kitchen;
     }
 }

@@ -49,8 +49,13 @@
         <activity
             android:name=".DeviceChange"
             android:label="Изменить устройство" />
-        <activity android:name=".Temperature"
-            android:label="Температура"></activity>
+        <activity
+            android:name=".Temperature"
+            android:label="Температура" />
+        <activity android:name=".RGB"
+            android:label="RGB панель">
+
+        </activity>
     </application>
 
 </manifest>

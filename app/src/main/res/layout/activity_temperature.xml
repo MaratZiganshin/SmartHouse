@@ -23,5 +23,6 @@
         android:layout_below="@+id/celcium"
         android:textColor="#000000"
         android:text = " ºF"
+        android:id = "@+id/farengate"
         android:layout_margin="20dp"/>
 </RelativeLayout>

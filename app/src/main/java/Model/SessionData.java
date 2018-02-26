@@ -50,10 +50,26 @@ public class SessionData {
         return devices;
     }
 
-    public static Device currentDevice;
-    public static Room currentRoom;
+    private static Device currentDevice;
+    private static Room currentRoom;
 
     public static void setDevices(List<Device> devices) {
         SessionData.devices = devices;
+    }
+
+    public static Device getCurrentDevice() {
+        return currentDevice;
+    }
+
+    public static void setCurrentDevice(Device currentDevice) {
+        SessionData.currentDevice = currentDevice;
+    }
+
+    public static Room getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public static void setCurrentRoom(Room currentRoom) {
+        SessionData.currentRoom = currentRoom;
     }
 }

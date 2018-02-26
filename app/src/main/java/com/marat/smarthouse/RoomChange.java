@@ -13,55 +13,58 @@ import Model.SessionData;
 
 public class RoomChange extends AppCompatActivity {
 
+    private View.OnClickListener deleteButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            try {
+                Thread thread = new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            DataGetter.deleteRoom(Long.parseLong(SessionData.getId()), SessionData.getSessionToken().getToken(), SessionData.getCurrentRoom().getId(), true);
+                            Intent intent = new Intent(RoomChange.this, Rooms.class);
+                            startActivity(intent);
+                        } catch (Exception e) {}
+                    }
+                };
+                thread.start();
+                thread.join();
+            }
+            catch (Exception e){}
+        }
+    };
+
+    private View.OnClickListener renameButtonListener = new View.OnClickListener(){
+        @Override
+        public void onClick(View view) {
+            try {
+                Thread thread = new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            AutoCompleteTextView textView = findViewById(R.id.room_name);
+                            String name = textView.getText().toString();
+                            DataGetter.renameRoom(Long.parseLong(SessionData.getId()), SessionData.getSessionToken().getToken(), SessionData.getCurrentRoom().getId(), name, SessionData.getCurrentRoom().getType(), true);
+                            Intent intent = new Intent(RoomChange.this, Rooms.class);
+                            startActivity(intent);
+                        } catch (Exception e) {}
+                    }
+                };
+                thread.start();
+                thread.join();
+            }
+            catch (Exception e){}
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_change);
         Button button = findViewById(R.id.delete_button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    Thread thread = new Thread() {
-                        @Override
-                        public void run() {
-                            try {
-                                DataGetter.deleteRoom(Long.parseLong(SessionData.getId()), SessionData.getSessionToken().getToken(), SessionData.currentRoom.getId(), true);
-                                    Intent intent = new Intent(RoomChange.this, Rooms.class);
-                                    startActivity(intent);
-                            } catch (Exception e) {}
-                        }
-                    };
-                    thread.start();
-                    thread.join();
-                }
-                catch (Exception e){}
-            }
-        });
+        button.setOnClickListener(deleteButtonListener);
 
         Button rename =findViewById(R.id.rename_button);
 
-        rename.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    Thread thread = new Thread() {
-                        @Override
-                        public void run() {
-                            try {
-                                AutoCompleteTextView textView = findViewById(R.id.room_name);
-                                String name = textView.getText().toString();
-                                DataGetter.renameRoom(Long.parseLong(SessionData.getId()), SessionData.getSessionToken().getToken(), SessionData.currentRoom.getId(), name,true);
-                                Intent intent = new Intent(RoomChange.this, Rooms.class);
-                                startActivity(intent);
-                            } catch (Exception e) {}
-                        }
-                    };
-                    thread.start();
-                    thread.join();
-                }
-                catch (Exception e){}
-            }
-        });
+        rename.setOnClickListener(renameButtonListener);
     }
 }

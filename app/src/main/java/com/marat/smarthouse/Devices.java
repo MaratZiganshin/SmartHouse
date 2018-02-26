@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,46 @@ import Model.Room;
 import Model.SessionData;
 
 public class Devices extends AppCompatActivity {
+
+    private View.OnClickListener deviceClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Device r = null;
+            for (Device device : SessionData.getDevices())
+                if (device.getId() == Long.parseLong(view.getContentDescription().toString()))
+                {
+                    r = device;
+                    break;
+                }
+
+            try {
+                SessionData.setCurrentDevice(r);
+                deviceActivate();
+                if (SessionData.getCurrentDevice().getState().equals("on"))
+                    view.setBackgroundResource(R.drawable.room_button_on);
+                if (SessionData.getCurrentDevice().getState().equals("off"))
+                    view.setBackgroundResource(R.drawable.room_button);
+            }
+            catch (Exception e){}
+        }
+    };
+
+    private View.OnLongClickListener deviceLongClickListener = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View view) {
+            Device r = null;
+            for (Device device : SessionData.getDevices())
+                if (device.getId() == Long.parseLong(view.getContentDescription().toString()))
+                {
+                    r = device;
+                    break;
+                }
+            SessionData.setCurrentDevice(r);
+            Intent intent = new Intent(Devices.this, DeviceChange.class);
+            startActivity(intent);
+            return true;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,65 +76,30 @@ public class Devices extends AppCompatActivity {
                     linearLayout = findViewById(R.id.devices_grid2);
                 String name = device.getType();
                 ImageButton button = new ImageButton(this);
-                button.setBackgroundResource(R.drawable.room_button);
+                if (device.getState().equals("on"))
+                    button.setBackgroundResource(R.drawable.room_button_on);
+                else
+                    button.setBackgroundResource(R.drawable.room_button);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                params.setMargins(30,30,30, 30);
+                params.setMargins(50,50,50, 50);
                 button.setLayoutParams(params);
                 button.setImageResource(getDrawableByName(device));
                 button.setScaleType(ImageButton.ScaleType.FIT_CENTER);
-                button.setPadding(10,10,10,10);
+                button.setPadding(50,50,50,50);
                 button.setAdjustViewBounds(true);
                 button.setContentDescription(((Long)device.getId()).toString());
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Device r = null;
-                        for (Device device : SessionData.getDevices())
-                            if (device.getId() == Long.parseLong(view.getContentDescription().toString()))
-                            {
-                                r = device;
-                                break;
-                            }
-
-                        try {
-                            SessionData.currentDevice = r;
-                            if (r.getType().equals("Light")){
-                                Thread thread = new Thread(){
-                                    @Override
-                                    public void run() {
-                                        try {
-                                            SessionData.currentDevice = DataGetter.setCommand(Long.parseLong(SessionData.getId()), SessionData.getSessionToken().getToken(), SessionData.currentDevice.getId(), "on", true);
-                                        }
-                                        catch (Exception e){
-
-                                        }
-                                    }
-                                };
-                                thread.start();
-                                thread.join();
-                            }
-                        }
-                        catch (Exception e){}
-                    }
-                });
-                button.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View view) {
-                        Device r = null;
-                        for (Device device : SessionData.getDevices())
-                            if (device.getId() == Long.parseLong(view.getContentDescription().toString()))
-                            {
-                                r = device;
-                                break;
-                            }
-                        SessionData.currentDevice = r;
-                        Intent intent = new Intent(Devices.this, DeviceChange.class);
-                        startActivity(intent);
-                        return true;
-                    }
-                });
+                button.setOnClickListener(deviceClickListener);
+                button.setOnLongClickListener(deviceLongClickListener);
 
                 linearLayout.addView(button);
+
+                LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                p.setMargins(50, 10, 50, 10);
+                TextView textView = new TextView(this);
+                textView.setText(device.getName());
+                textView.setLayoutParams(p);
+                textView.setMaxLines(1);
+                linearLayout.addView(textView);
             }
             index++;
             if (index % 2 == 0)
@@ -103,27 +109,82 @@ public class Devices extends AppCompatActivity {
             ImageButton button = new ImageButton(this);
             button.setBackgroundResource(R.drawable.room_button);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            params.setMargins(30,30,30, 30);
+            params.setMargins(50,50,50, 50);
             button.setLayoutParams(params);
             button.setImageResource(R.drawable.settings);
             button.setScaleType(ImageButton.ScaleType.FIT_CENTER);
-            button.setPadding(10,10,10,10);
+            button.setPadding(50,50,50,50);
             button.setAdjustViewBounds(true);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    try{
-                        Intent intent = new Intent(Devices.this, DeviceAdd.class);
-                        startActivity(intent);
-                    }
-                    catch (Exception e){}
-                }
-            });
+            button.setOnClickListener(settingsButtonListener);
             linearLayout.addView(button);
+            LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            p.setMargins(50, 10, 50, 10);
+            TextView textView = new TextView(this);
+            textView.setText("Настройки");
+            textView.setLayoutParams(p);
+            textView.setMaxLines(1);
+            linearLayout.addView(textView);
         }
         catch (Exception e){}
     }
 
+    private View.OnClickListener settingsButtonListener = new View.OnClickListener(){
+        @Override
+        public void onClick(View view) {
+            try{
+                Intent intent = new Intent(Devices.this, DeviceAdd.class);
+                startActivity(intent);
+            }
+            catch (Exception e){}
+        }
+    };
+
+    private void deviceActivate(){
+        try {
+            Device r = SessionData.getCurrentDevice();
+            Thread thread = null;
+            if ((r.getType().equals("Light") ||r.getType().equals("Outlet")) && r.getState().equals("on")) {
+                thread = new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            DataGetter.setCommand(Long.parseLong(SessionData.getId()), SessionData.getSessionToken().getToken(), SessionData.getCurrentDevice().getId(), "off", true);
+                            SessionData.getCurrentDevice().setState("off");
+                        } catch (Exception e) {
+
+                        }
+                    }
+                };
+                thread.start();
+                thread.join();
+            }
+            else if ((r.getType().equals("Light")||r.getType().equals("Outlet")) && r.getState().equals("off")) {
+                thread = new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            DataGetter.setCommand(Long.parseLong(SessionData.getId()), SessionData.getSessionToken().getToken(), SessionData.getCurrentDevice().getId(), "on", true);
+                            SessionData.getCurrentDevice().setState("on");
+                        } catch (Exception e) {
+
+                        }
+                    }
+                };
+                thread.start();
+                thread.join();
+            }
+            else if (r.getType().equals("Temperature")){
+                Intent intent = new Intent(Devices.this, Temperature.class);
+                startActivity(intent);
+            }
+            else if (r.getType().equals("RGB")){
+                Intent intent = new Intent(Devices.this, RGB.class);
+                startActivity(intent);
+            }
+
+        }
+        catch (Exception e){}
+    }
     private int getDrawableByName(Device device){
         switch (device.getType()){
             case "Light":
@@ -136,7 +197,7 @@ public class Devices extends AppCompatActivity {
             case "Outlet":
                 return R.drawable.outlet;
             default:
-                return R.drawable.outlet;
+                return R.drawable.light;
         }
     }
 }

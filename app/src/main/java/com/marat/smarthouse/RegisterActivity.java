@@ -21,6 +21,8 @@ public class RegisterActivity extends AppCompatActivity {
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private AutoCompleteTextView mLoginView;
+    private AutoCompleteTextView mId;
+    private AutoCompleteTextView mHomePass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +31,8 @@ public class RegisterActivity extends AppCompatActivity {
         mEmailView = (AutoCompleteTextView)findViewById(R.id.email);
         mLoginView = findViewById(R.id.login);
         mPasswordView = (EditText)findViewById(R.id.password);
-
+        mId = findViewById(R.id.home_id_input);
+        mHomePass = findViewById(R.id.home_pass_input);
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,20 +45,29 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private boolean attemptRegister(){
-        String email = mEmailView.getText().toString();
-        String login = mLoginView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        final String email = mEmailView.getText().toString();
+        final String login = mLoginView.getText().toString();
+        final String password = mPasswordView.getText().toString();
+        final String id = mId.getText().toString();
+        final String homePass = mHomePass.getText().toString();
         if (isValidLogin(login) && isValidEmail(email) && isValidPassword(password)){
             try {
-                DataGetter.registrateUser(email, login, password);
+                Thread thread = new Thread(){
+                    @Override
+                    public void run(){
+                        try {
+                            DataGetter.registrateUser(email, login, password, id, homePass);
+                        } catch (IOException e) {
+
+                        }
+                    }
+                };
+
+                thread.start();
+                thread.join();
                 return true;
             }
-            catch (IllegalArgumentException e){
-                mLoginView.setError("Пользователь уже существует");
-                mLoginView.requestFocus();
-                return false;
-            }
-            catch (IOException e){
+            catch (Exception e){
                 Snackbar.make(findViewById(R.id.main_layout), "Ошибка подключения", Snackbar.LENGTH_SHORT).show();
                 return false;
             }

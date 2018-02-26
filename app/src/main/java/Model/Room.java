@@ -24,6 +24,7 @@ public class Room {
         this.name = name;
         this.id = id;
         this.devices = devices;
+        this.type = type;
     }
 
     public Device[] getDevices() {

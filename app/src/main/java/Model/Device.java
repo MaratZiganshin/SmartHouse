@@ -3,13 +3,14 @@ package Model;
 public class Device {
     private long id;
     private String type;
-
+    private long roomId;
     private String state;
-    public Device(long id, String name, String type, String state) {
+    public Device(long id, String name, String type, String state, long roomId) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.state = state;
+        this.roomId = roomId;
     }
 
     public long getId() {
@@ -44,5 +45,13 @@ public class Device {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public long getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(long roomId) {
+        this.roomId = roomId;
     }
 }
