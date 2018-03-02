@@ -35,7 +35,7 @@ public class Devices extends AppCompatActivity {
                 deviceActivate();
                 if (SessionData.getCurrentDevice().getState().equals("on"))
                     view.setBackgroundResource(R.drawable.room_button_on);
-                if (SessionData.getCurrentDevice().getState().equals("off"))
+                else
                     view.setBackgroundResource(R.drawable.room_button);
             }
             catch (Exception e){}
@@ -143,7 +143,7 @@ public class Devices extends AppCompatActivity {
         try {
             Device r = SessionData.getCurrentDevice();
             Thread thread = null;
-            if ((r.getType().equals("Light") ||r.getType().equals("Outlet")) && r.getState().equals("on")) {
+            if ((r.getType().equals("Lamp") ||r.getType().equals("Outlet")) && r.getState().equals("on")) {
                 thread = new Thread() {
                     @Override
                     public void run() {
@@ -158,7 +158,7 @@ public class Devices extends AppCompatActivity {
                 thread.start();
                 thread.join();
             }
-            else if ((r.getType().equals("Light")||r.getType().equals("Outlet")) && r.getState().equals("off")) {
+            else if ((r.getType().equals("Lamp")||r.getType().equals("Outlet"))) {
                 thread = new Thread() {
                     @Override
                     public void run() {
@@ -187,11 +187,8 @@ public class Devices extends AppCompatActivity {
     }
     private int getDrawableByName(Device device){
         switch (device.getType()){
-            case "Light":
-                if (device.getState().equals("off"))
-                    return R.drawable.light_off;
-                else
-                    return R.drawable.light;
+            case "Lamp":
+                return R.drawable.light;
             case "Temperature":
                 return R.drawable.temperature;
             case "Outlet":

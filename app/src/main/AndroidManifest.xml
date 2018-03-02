@@ -3,20 +3,19 @@
     package="com.marat.smarthouse">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/home"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/home"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
-            android:label="@string/welcome">
+            android:label="SmartHouse"
+            android:screenOrientation="portrait">
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,35 +24,33 @@
         </activity>
         <activity
             android:name=".RegisterActivity"
+            android:screenOrientation="portrait"
             android:label="@string/action_register"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".NoHome" />
+        <activity android:name=".NoHome" android:screenOrientation="portrait"/>
         <activity
             android:name=".Rooms"
-            android:label="@string/app_name" />
+            android:label="@string/app_name" android:screenOrientation="portrait"/>
         <activity
             android:name=".Devices"
-            android:label="Устройства" />
-        <activity
-            android:name=".Lamp"
-            android:label="Лампа" />
+            android:label="Устройства" android:screenOrientation="portrait"/>
         <activity
             android:name=".RoomAdd"
-            android:label="Новая комната" />
+            android:label="Новая комната" android:screenOrientation="portrait"/>
         <activity
             android:name=".RoomChange"
-            android:label="Изменить комнату" />
+            android:label="Изменить комнату" android:screenOrientation="portrait"/>
         <activity
             android:name=".DeviceAdd"
-            android:label="Добавить устройство" />
+            android:label="Добавить устройство" android:screenOrientation="portrait"/>
         <activity
             android:name=".DeviceChange"
-            android:label="Изменить устройство" />
+            android:label="Изменить устройство" android:screenOrientation="portrait"/>
         <activity
             android:name=".Temperature"
-            android:label="Температура" />
+            android:label="Температура" android:screenOrientation="portrait"/>
         <activity android:name=".RGB"
-            android:label="RGB панель">
+            android:label="RGB панель" android:screenOrientation="portrait">
 
         </activity>
     </application>
