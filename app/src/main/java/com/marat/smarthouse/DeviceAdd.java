@@ -27,7 +27,7 @@ public class DeviceAdd extends AppCompatActivity {
         Spinner spinner = findViewById(R.id.choose_device);
         String[] strings = new String[list.size()];
         for (int i = 0; i < list.size(); i++)
-            strings[i] = list.get(i).getType();
+            strings[i] = list.get(i).getName();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, strings);
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -56,7 +56,7 @@ public class DeviceAdd extends AppCompatActivity {
                             Spinner spinner = findViewById(R.id.choose_device);
                             int position = spinner.getSelectedItemPosition();
                             Device d = list.get(position);
-                            DataGetter.renameDevice(Long.parseLong(SessionData.getId()), SessionData.getSessionToken().getToken(), d.getId(), d.getRoomId(), d.getName(), true);
+                            DataGetter.renameDevice(Long.parseLong(SessionData.getId()), SessionData.getSessionToken().getToken(), d.getId(), SessionData.getCurrentRoom().getId(), d.getName(), true);
                             Intent intent = new Intent(DeviceAdd.this, Rooms.class);
                             startActivity(intent);
                         } catch (Exception e) {}

@@ -48,6 +48,7 @@ public class Rooms extends AppCompatActivity {
             try {
                 ArrayList<Device> list = (ArrayList<Device>)DataGetter.getDevices(r.getId());
                 SessionData.setDevices(list);
+                SessionData.setCurrentRoom(r);
                 Intent intent = new Intent(Rooms.this, Devices.class);
                 startActivity(intent);
             }

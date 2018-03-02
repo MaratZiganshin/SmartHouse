@@ -153,7 +153,7 @@ public class DataGetter {
                     JSONArray devicesJson= object.getJSONArray("devices");
                     Device[] devices = new Device[devicesJson.length()];
                     for (int j = 0; j < devicesJson.length(); j++){
-                        Device device = new Device(devicesJson.getJSONObject(j).getLong("id"), ""/*devicesJson.getJSONObject(j).getString("name")*/,devicesJson.getJSONObject(j).getString("type"), devicesJson.getJSONObject(j).getString("state"), Long.parseLong(devicesJson.getJSONObject(j).getString("roomId")));
+                        Device device = new Device(devicesJson.getJSONObject(j).getLong("id"), devicesJson.getJSONObject(j).getString("name"),devicesJson.getJSONObject(j).getString("type"), devicesJson.getJSONObject(j).getString("state"), Long.parseLong(devicesJson.getJSONObject(j).getString("roomId")));
                         devices[j] = device;
                     }
                     Room room = new Room(name, type, Id, devices);
