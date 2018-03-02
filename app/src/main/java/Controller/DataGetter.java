@@ -51,7 +51,7 @@ public class DataGetter {
         }
     }
 
-    public static void registrateUser(String login, String password, String email, String homeId, String homePass) throws IOException{
+    public static void registrateUser(String email, String login, String password, String homeId, String homePass) throws IOException{
         String address = "http://185.188.182.194:8080/user/register?login=" + login + "&password=" + password + "&email=" + email+ "&homeId=" + homeId+ "&homePass=" + homePass;
         try {
             HttpURLConnection connection = (HttpURLConnection)(new URL(address).openConnection());

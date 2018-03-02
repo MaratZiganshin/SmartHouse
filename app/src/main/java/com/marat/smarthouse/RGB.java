@@ -33,6 +33,18 @@ public class RGB extends AppCompatActivity {
         final SeekBar red = findViewById(R.id.red_bar);
         final SeekBar green = findViewById(R.id.green_bar);
         final SeekBar blue = findViewById(R.id.blue_bar);
+        try{
+            String state = SessionData.getCurrentDevice().getState();
+            String[] colors = state.split("\\.");
+            red.setProgress(Integer.parseInt(colors[0]));
+            green.setProgress(Integer.parseInt(colors[1]));
+            blue.setProgress(Integer.parseInt(colors[2]));
+            if (colors[3].equals("on"))
+                switcher.setChecked(true);
+            else
+                switcher.setChecked(false);
+        }
+        catch (Exception e){}
         redColor = red.getProgress();
         greenColor = green.getProgress();
         blueColor = blue.getProgress();
