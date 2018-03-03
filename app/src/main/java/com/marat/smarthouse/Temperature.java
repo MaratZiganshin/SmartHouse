@@ -23,7 +23,7 @@ public class Temperature extends AppCompatActivity {
         c.setText(forC);
 
         TextView f = findViewById(R.id.farengate);
-        String forF = "" + (grad * 9.0 / 5.0 + 32) + c.getText();
+        String forF = "" + (grad * 9.0 / 5.0 + 32) + f.getText();
         f.setText(forF);
     }
 }
